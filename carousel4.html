@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <style>
+       .carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-items {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-items img {
+  width: 100%;
+}
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  text-decoration: none;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <div class="carousel-items">
+          <img src="image1.jpg">
+          <img src="image2.jpg">
+          <img src="image3.jpg">
+        </div>
+        <a class="carousel-prev" href="#">Previous</a>
+        <a class="carousel-next" href="#">Next</a>
+      </div>
+      
+
+
+    <script>
+             const carouselItems = document.querySelector('.carousel-items');
+const carouselPrev = document.querySelector('.carousel-prev');
+const carouselNext = document.querySelector('.carousel-next');
+const itemWidth = carouselItems.querySelector('img').clientWidth;
+let position = 0;
+
+carouselPrev.addEventListener('click', () => {
+  position += itemWidth;
+  if (position > 0) {
+    position = -itemWidth * (carouselItems.children.length - 1);
+  }
+  carouselItems.style.transform = `translateX(${position}px)`;
+});
+
+carouselNext.addEventListener('click', () => {
+  position -= itemWidth;
+  if (position < -itemWidth * (carouselItems.children.length - 1)) {
+    position = 0;
+  }
+  carouselItems.style.transform = `translateX(${position}px)`;
+});
+console.log(position)
+
+
+
+    </script>
+    
+</body>
+</html>

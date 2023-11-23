@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.carousel-container {
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* padding: 10px; */
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.carousel-button.prev {
+  left: 0;
+}
+
+.carousel-button.next {
+  right: 0;
+}
+
+</style>
+</head>
+<body>
+    <div class="carousel">
+        <div class="carousel-container">
+          <img src="image1.jpg" alt="Image 1" />
+          <img src="image2.jpg" alt="Image 2" />
+          <img src="image3.jpg" alt="Image 3" />
+        </div>
+        <button class="carousel-button prev">&lt;</button>
+        <button class="carousel-button next">&gt;</button>
+      </div>
+      
+    
+<script>
+    const carousel = document.querySelector(".carousel");
+const container = carousel.querySelector(".carousel-container");
+const prevButton = carousel.querySelector(".prev");
+const nextButton = carousel.querySelector(".next");
+const images = carousel.querySelectorAll("img");
+
+let currentIndex = 0;
+let timerId;
+
+function moveToIndex(index) {
+  currentIndex = index;
+  const translateX = -currentIndex * carousel.offsetWidth;
+  container.style.transform = `translateX(${translateX}px)`;
+}
+
+function movePrev() {
+  const newIndex = (currentIndex - 1 + images.length) % images.length;
+  moveToIndex(newIndex);
+}
+
+function moveNext() {
+  const newIndex = (currentIndex + 1) % images.length;
+  moveToIndex(newIndex);
+}
+
+function startAutoSlide() {
+  timerId = setInterval(moveNext, 3000);
+}
+
+function stopAutoSlide() {
+  clearInterval(timerId);
+}
+
+prevButton.addEventListener("click", () => {
+  movePrev();
+  stopAutoSlide();
+});
+
+nextButton.addEventListener("click", () => {
+  moveNext();
+  stopAutoSlide();
+});
+
+startAutoSlide();
+
+</script>
+</body>
+</html>

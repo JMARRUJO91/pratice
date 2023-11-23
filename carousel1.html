@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slider {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+.slides {
+  display: flex;
+  width: calc(100% * 3);
+  height: 100%;
+}
+.slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+.active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+.buttons {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+}
+button {
+  border: none;
+  background-color: transparent;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+}
+.navigation {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 10px;
+  cursor: pointer;
+}
+.active-dot {
+  background-color: #fff;
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="slider">
+        <div class="slides">
+          <div class="slide active" style="background-image: url('image1.jpg');"></div>
+          <div class="slide" style="background-image: url('image2.jpg');"></div>
+          <div class="slide" style="background-image: url('image3.jpg');"></div>
+        </div>
+        <div class="buttons">
+          <button id="prev">&lt</button>
+          <button id="next">></button>
+        </div>
+        <div class="navigation">
+          <span class="dot active" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+      </div>
+      
+
+
+
+    <script>
+        let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides((slideIndex += n));
+}
+
+function currentSlide(n) {
+  showSlides((slideIndex = n));
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("slide");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {
+    slideIndex = 1;
+  }
+  if (n < 1) {
+    slideIndex = slides.length;
+  }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].classList.remove("active");
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].classList.remove("active-dot");
+  }
+  slides[slideIndex - 1].classList.add("active");
+  dots[slideIndex - 1].classList.add("active-dot");
+}
+
+let slideTimer = setInterval(function() {
+  plusSlides(1);
+}, 1000);
+
+document.getElementById("prev").addEventListener("click", function() {
+  clearInterval(slideTimer);
+  plusSlides(-1);
+  slideTimer = setInterval(function() {
+    plusSlides(1);
+  })
+});
+    </script>
+</body>
+</html>
